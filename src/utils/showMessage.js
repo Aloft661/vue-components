@@ -3,10 +3,10 @@ import Icon from '@/components/Icon';
 import styles from './showMessage.module.less';
 /**
  * 弹出消息
- * @param {String} content 消息内容
- * @param {String} type 消息类型 info error success warn
- * @param {Number} duration 多久后消失
- * @param {HTMLElement} container 容器，消息会显示到该容器的正中间；如果不传，则显示到页面正中间
+ * @param { String } content 消息内容
+ * @param { String } type 消息类型 info error success warn
+ * @param { Number } duration 多久后消失
+ * @param { HTMLElement } container 容器，消息会显示到该容器的正中间；如果不传，则显示到页面正中间
  */
 export default function (options = {}) {
     const {
@@ -17,17 +17,17 @@ export default function (options = {}) {
     } = options;
     // 创建消息元素
     const div = document.createElement('div');
-    const iconDom = getComponentRootDom(Icon, { 
-        type 
+    const iconDom = getComponentRootDom(Icon, {
+        type
     });
 
     div.innerHTML = `<span class="${styles.icon}">${iconDom.outerHTML}</span><div>${content}</div>`;
     div.className = `${styles.message} ${styles["message-" + type]}`;
-    
-    if (getComputedStyle(container).position === 'static') {
-        container.style.position = 'relative';
+    if (options.container) {
+        if (getComputedStyle(container).position === 'static') {
+            container.style.position = 'relative';
+        }
     }
-
     container.appendChild(div);
     div.clientHeight;
 

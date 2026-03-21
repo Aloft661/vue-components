@@ -4,7 +4,7 @@
         <h1 class="title">阿轩的小窝</h1>
         <Menu />
         <Contact />
-        <p class="footer"></p>
+        <p class="footer">黑ICP备17001719号</p>
     </div>
 </template>
 
