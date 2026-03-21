@@ -1,9 +1,7 @@
 <template>
     <div class="site-aside-container">
-        <Avatar 
-            :url="url"
-        />
-        <h1 class="title">龙傲天的小窝</h1>
+        <Avatar :url="url"/>
+        <h1 class="title">阿轩的小窝</h1>
         <Menu />
         <Contact />
         <p class="footer"></p>
@@ -14,6 +12,7 @@
     import Avatar from '@/components/Avatar/index.vue';
     import Menu from './Menu';
     import Contact from './Contact';
+    import avatar from '@/assets/avatar.jpg'
     export default {
         components: {
             Avatar,
@@ -22,7 +21,7 @@
         },
         data () {
             return {
-                url: 'https://copyright.bdstatic.com/vcg/creative/7a55323c17ced5b5dfb5ee189a8e4349.jpg@wm_1,k_cGljX2JqaHdhdGVyLmpwZw=='
+                url: avatar
             }
         }
     }
