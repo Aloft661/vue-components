@@ -12,14 +12,14 @@
             }" 
             @transitionend="handleTransitionEnd"
         >
-            <li v-for="item in banners" :key="item.id">
+            <li v-for="item in data" :key="item.id">
                 <CarouselItem :carousel="item"/>
             </li>
         </ul>
         <div class="icon icon-up" v-show="index >= 1" @click="switchTo(index - 1)">
             <Icon type="arrowUp" />
         </div>
-        <div class="icon icon-down" v-show="index < banners.length - 1" @click="switchTo(index + 1)">
+        <div class="icon icon-down" v-show="index < data.length - 1" @click="switchTo(index + 1)">
             <Icon type="arrowDown" />
         </div>
         <ul class="indicator">
@@ -27,7 +27,7 @@
                 :class="{
                     active: i === index
                 }" 
-                v-for="(item, i) in banners" 
+                v-for="(item, i) in data" 
                 :key="item.id" 
                 @click="switchTo(i)"
             >
@@ -40,24 +40,20 @@
     import { getBanners } from "@/api/banner";
     import CarouselItem from "./CarouselItem.vue";
     import Icon from "@/components/Icon";
+    import fetchData from "@/mixins/fetchData";
 
     export default {
+        mixins: [fetchData([])],
         components: {
             CarouselItem,
             Icon
         },
         data() {
             return {
-                isLoading: true,
-                banners: [],
                 index: 0, // 当前显示的是第几张轮播图
                 containerHeight: 0, // 整个容器的高度
                 switching: false // 是否正在翻页中
             }
-        },
-        async created() {
-            this.banners = await getBanners();
-            this.isLoading = false;
         },
         mounted() {
             this.containerHeight = this.$refs.container.clientHeight;
@@ -72,6 +68,9 @@
             }
         },
         methods: {
+            async fetchData() {
+                return await getBanners();
+            },
             // 切换轮播图
             switchTo(i) {
                 this.index = i
@@ -83,7 +82,7 @@
                 if (e.deltaY < 0 && this.index > 0) {
                     this.switching = true;
                     this.index--;
-                } else if (e.deltaY > 0 && this.index < this.banners.length - 1) {
+                } else if (e.deltaY > 0 && this.index < this.data.length - 1) {
                     this.switching = true;
                     this.index++;
                 }
