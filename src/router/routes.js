@@ -20,6 +20,11 @@ export default [
         component: () => import("@/views/Blog")
     },
     {
+        name: "BlogDetail",
+        path: "/article/:id",
+        component: () => import("@/views/Blog/Detaile")
+    },
+    {
         name: "Project",
         path: "/project",
         component: () => import("@/views/Project")
