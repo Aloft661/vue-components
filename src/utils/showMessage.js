@@ -1,12 +1,15 @@
 import getComponentRootDom from "./getComponentRootDom";
 import Icon from '@/components/Icon';
 import styles from './showMessage.module.less';
+
 /**
  * 弹出消息
- * @param { String } content 消息内容
- * @param { String } type 消息类型 info error success warn
- * @param { Number } duration 多久后消失
- * @param { HTMLElement } container 容器，消息会显示到该容器的正中间；如果不传，则显示到页面正中间
+ * @param { Object } options - 配置选项对象
+ * @param { String } [options.content=''] - 消息内容
+ * @param { 'info'|'error'|'success'|'warn' } [options.type = 'info'] - 消息类型 info error success warn
+ * @param { Number } [options.duration = 2000] - 多久后消失
+ * @param { HTMLElement } [options.container = document.body] - 容器，消息会显示到该容器的正中间；如果不传，则显示到页面正中间
+ * @param { Function } [options.callback] - 消息关闭后的回调函数
  */
 export default function (options = {}) {
     const {
