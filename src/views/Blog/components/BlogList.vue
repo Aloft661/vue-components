@@ -83,8 +83,25 @@
                 }
             }
         },
+        mounted () {
+            this.$bus.$on("setMainScroll", this.handleSetMainScroll);
+            this.$refs.container.addEventListener("scroll", this.handleScroll);
+        },
+        beforeDestroy () {
+            this.$refs.container.removeEventListener("scroll", this.handleScroll);
+        },
+        destroyed () {
+            this.$bus.$emit("mainScroll");
+            this.$bus.$off("setMainScroll", this.handleSetMainScroll);
+        },
         methods: {
             formatDate,
+            handleScroll () {
+                this.$bus.$emit("mainScroll", this.$refs.container);
+            },
+            handleSetMainScroll (scrollTop) {
+                this.$refs.container.scrollTop = scrollTop;
+            },
             async fetchData () {
                 return await getBlogs(
                     this.routeInfo.page, 
@@ -134,6 +151,7 @@
         width: 100%;
         height: 100%;
         box-sizing: border-box;
+        scroll-behavior: smooth;
         ul {
             list-style: none;
             margin: 0;
