@@ -11,8 +11,8 @@
                             }
                         }"
                     >
-                        <img 
-                            :src="item.thumb" 
+                        <img
+                            v-lazy="item.thumb"
                             :alt="item.title"
                             :title="item.title" 
                         />
@@ -65,8 +65,10 @@
     import fetchData from "@/mixins/fetchData";
     import { getBlogs } from "@/api/blog";
     import { formatDate } from "@/utils";
+    import mainScroll from "@/mixins/mainScroll";
+
     export default {
-        mixins: [fetchData({})],
+        mixins: [fetchData({}), mainScroll("container")],
         components: {
             Pager
         },
@@ -83,25 +85,8 @@
                 }
             }
         },
-        mounted () {
-            this.$bus.$on("setMainScroll", this.handleSetMainScroll);
-            this.$refs.container.addEventListener("scroll", this.handleScroll);
-        },
-        beforeDestroy () {
-            this.$refs.container.removeEventListener("scroll", this.handleScroll);
-        },
-        destroyed () {
-            this.$bus.$emit("mainScroll");
-            this.$bus.$off("setMainScroll", this.handleSetMainScroll);
-        },
         methods: {
             formatDate,
-            handleScroll () {
-                this.$bus.$emit("mainScroll", this.$refs.container);
-            },
-            handleSetMainScroll (scrollTop) {
-                this.$refs.container.scrollTop = scrollTop;
-            },
             async fetchData () {
                 return await getBlogs(
                     this.routeInfo.page, 
