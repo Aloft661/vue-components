@@ -1,27 +1,27 @@
 <template>
     <ul class="contact-container">
         <li>
-            <a href="">
+            <a :href="data.github" target="_blan">
                 <div class="icon">
                     <Icon type="github" />
                 </div>
-                <span>ALoft661</span>
+                <span>{{ data.githubName }}</span>
             </a>
         </li>
         <li>
-            <a href="malito:3036404130@qq.com">
+            <a :href="`malito:${data.mail}`">
                 <div class="icon">
                     <Icon type="mail" />
                 </div>
-                <span>3036404130@qq.com</span>
+                <span>{{ data.mail }}</span>
             </a>
         </li>
         <li>
-            <a href="tencent://message/?Menu=yes&uin=3036404130&Service=300&sigT=45a1e5847943b64c6ff3990f8a9e644d2b31356cb0b4ac6b24663a3c8dd0f8aa12a595b1714f9d45">
+            <a :href="`tencent://message/?Menu=yes&uin=${data.qq}&Service=300&sigT=45a1e5847943b64c6ff3990f8a9e644d2b31356cb0b4ac6b24663a3c8dd0f8aa12a595b1714f9d45`">
                 <div class="icon">
                     <Icon type="qq" />
                 </div>
-                <span>3036404130</span>
+                <span>{{ data.qq }}</span>
             </a>
             <div class="pop">
                 <img src="../../../assets/qq.jpg" alt="">
@@ -32,7 +32,7 @@
                 <div class="icon weixin">
                     <Icon type="weixin" />
                 </div>
-                <span>h3036404130</span>
+                <span>{{ data.weixin }}</span>
             </a>
             <div class="pop">
                 <img src="../../../assets/vx.jpg" alt="">
@@ -42,13 +42,17 @@
 </template>
 
 <script>
-import Icon from "@/components/Icon";
-import "@/styles/global.less";
-export default {
-    components: {
-        Icon
+    import Icon from "@/components/Icon";
+    import "@/styles/global.less";
+    import { mapState } from "vuex";
+    export default {
+        components: {
+            Icon
+        },
+        computed: {
+            ...mapState("setting", ["data"])
+        }
     }
-}
 </script>
 
 <style scoped lang="less">

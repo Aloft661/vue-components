@@ -20,6 +20,7 @@
     import BlogTOC from "./components/BlogTOC";
     import BlogComment from "./components/BlogComment";
     import mainScroll from "@/mixins/mainScroll";
+    import { titleController } from "@/utils"
 
     export default {
         components: {
@@ -31,7 +32,9 @@
         mixins: [fetchData(null), mainScroll("mainContainer")],
         methods: {
             async fetchData () {
-                return await getBlog(this.$route.params.id);
+                const resp = await getBlog(this.$route.params.id);
+                titleController.setRouterTitle(resp.title);
+                return resp;
             }
         },
         updated () {
